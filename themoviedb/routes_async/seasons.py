@@ -11,12 +11,12 @@ class Season(Base):
         self.tv_id = tv_id
         self.season_id = season_id
 
-    async def details(self, *, append_to_response: Optional[str] = None) -> schemas.Season:
+    async def details(self, *, append_to_response: Optional[str] = None, image_language: str = "null") -> schemas.Season:
         """Get the TV season details by id.
 
         See more: https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
         """
-        data = await self.request(f"tv/{self.tv_id}/season/{self.season_id}", append_to_response=append_to_response)
+        data = await self.request(f"tv/{self.tv_id}/season/{self.season_id}", append_to_response=append_to_response, include_image_language=image_language)
         return utils.as_dataclass(schemas.Season, data)
 
     async def aggregate_credits(self) -> schemas.Credits:
